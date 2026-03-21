@@ -1,11 +1,4 @@
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import declarative_base
+from app.models import Base, User
 
-Base = declarative_base()
+__all__ = ["Base", "User"]
 
-class User(Base):
-    __tablename__ = "users"
-
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String)
-    email = Column(String, unique=True, index=True)
