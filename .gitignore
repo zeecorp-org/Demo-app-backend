@@ -1,0 +1,115 @@
+# ------------------------------
+# Python basics
+# ------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# ------------------------------
+# Virtual environments
+# ------------------------------
+venv/
+.env/
+.venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# ------------------------------
+# Environment variables
+# ------------------------------
+.env
+.env.*
+*.env
+
+# ------------------------------
+# IDE / Editor
+# ------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ------------------------------
+# Logs & runtime files
+# ------------------------------
+*.log
+*.pid
+*.seed
+*.out
+*.err
+
+# ------------------------------
+# OS files
+# ------------------------------
+.DS_Store
+Thumbs.db
+
+# ------------------------------
+# Testing & coverage
+# ------------------------------
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# ------------------------------
+# Build / packaging
+# ------------------------------
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# ------------------------------
+# FastAPI / Uvicorn / Gunicorn
+# ------------------------------
+*.sqlite3
+*.db
+
+# ------------------------------
+# Alembic migrations (optional)
+# ------------------------------
+# Keep migrations if you want version control!
+# Uncomment below ONLY if you don't want them tracked
+
+# alembic/versions/
+
+# ------------------------------
+# MyPy / type checking
+# ------------------------------
+.mypy_cache/
+.dmypy.json
+
+# ------------------------------
+# Ruff / linting
+# ------------------------------
+.ruff_cache/
+
+# ------------------------------
+# Docker
+# ------------------------------
+docker-compose.override.yml
+
+# ------------------------------
+# Jupyter (if used)
+# ------------------------------
+.ipynb_checkpoints/
+
+# ------------------------------
+# Static / media (optional)
+# ------------------------------
+# static/
+# media/
+
+# ------------------------------
+# Secrets
+# ------------------------------
+secrets.json
+*.key
+*.pem
