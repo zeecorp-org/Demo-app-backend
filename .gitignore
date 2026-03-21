@@ -23,7 +23,6 @@ venv.bak/
 # Environment variables
 # ------------------------------
 .env
-.env.*
 *.env
 
 # ------------------------------
@@ -113,3 +112,4 @@ docker-compose.override.yml
 secrets.json
 *.key
 *.pem
+
