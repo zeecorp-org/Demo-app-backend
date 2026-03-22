@@ -56,6 +56,10 @@ class Settings:
     trusted_hosts: list[str] | None = None
     database_url: str = "postgresql://demouser:demouser@localhost/testdb"
     sqlalchemy_echo: bool = False
+    jwt_secret_key: str = "change-me-in-production"
+    jwt_algorithm: str = "HS256"
+    jwt_access_token_expire_minutes: int = 15
+    jwt_refresh_token_expire_minutes: int = 60 * 24 * 7
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -72,6 +76,20 @@ class Settings:
             sqlalchemy_echo=_parse_bool(
                 os.getenv("SQLALCHEMY_ECHO"),
                 cls.sqlalchemy_echo,
+            ),
+            jwt_secret_key=os.getenv("JWT_SECRET_KEY", cls.jwt_secret_key),
+            jwt_algorithm=os.getenv("JWT_ALGORITHM", cls.jwt_algorithm),
+            jwt_access_token_expire_minutes=int(
+                os.getenv(
+                    "JWT_ACCESS_TOKEN_EXPIRE_MINUTES",
+                    str(cls.jwt_access_token_expire_minutes),
+                )
+            ),
+            jwt_refresh_token_expire_minutes=int(
+                os.getenv(
+                    "JWT_REFRESH_TOKEN_EXPIRE_MINUTES",
+                    str(cls.jwt_refresh_token_expire_minutes),
+                )
             ),
         )
 

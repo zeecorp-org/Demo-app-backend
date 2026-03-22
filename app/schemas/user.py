@@ -15,7 +15,18 @@ class UserBase(BaseModel):
 
 
 class UserCreate(UserBase):
-    pass
+    password: str
+
+    @field_validator("password")
+    @classmethod
+    def validate_password(cls, value: str) -> str:
+        if len(value) < 8:
+            raise ValueError("Password must be at least 8 characters long")
+        if len(value) > 16:
+            raise ValueError("Password must be at most 16 characters long")
+        if not any(char.isalpha() for char in value):
+            raise ValueError("Password must include at least one letter")
+        return value
 
 
 class UserRead(UserBase):

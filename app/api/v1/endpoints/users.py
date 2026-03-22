@@ -31,7 +31,7 @@ async def get_user_by_id(user_id: int, db: DbSession) -> UserRead:
 @router.post("/", response_model=UserRead, status_code=status.HTTP_201_CREATED)
 async def create_user_endpoint(payload: UserCreate, db: DbSession) -> UserRead:
     try:
-        return create_user(db, payload)
+        return await create_user(db, payload)
     except IntegrityError:
         db.rollback()
         raise HTTPException(
