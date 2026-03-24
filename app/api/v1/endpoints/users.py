@@ -1,11 +1,17 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_db
-from app.crud.user import create_user, delete_user, get_user, list_users
+from app.crud.user import (
+    create_user,
+    delete_user,
+    get_user,
+    list_users,
+    search_users_by_name,
+)
 from app.schemas.user import UserCreate, UserRead
 
 router = APIRouter()
@@ -15,6 +21,14 @@ DbSession = Annotated[Session, Depends(get_db)]
 @router.get("/", response_model=list[UserRead])
 async def get_users(db: DbSession) -> list[UserRead]:
     return list_users(db)
+
+
+@router.get("/search", response_model=list[UserRead])
+async def search_users(
+    db: DbSession,
+    name: Annotated[str, Query(min_length=1)],
+) -> list[UserRead]:
+    return search_users_by_name(db, name)
 
 
 @router.get("/{user_id}", response_model=UserRead)
