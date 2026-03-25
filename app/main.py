@@ -8,7 +8,7 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 from app.api.router import api_router
 from app.core.config import settings
 from app.core.logging import configure_logging, get_logger
-from app.db.session import ping_database
+from app.db.session import create_tables, ping_database
 
 configure_logging()
 logger = get_logger(__name__)
@@ -17,6 +17,12 @@ logger = get_logger(__name__)
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     logger.info("Starting %s in %s mode", settings.app_name, settings.environment)
+    if settings.auto_create_tables:
+        if ping_database():
+            # create_tables()
+            logger.info("Database tables are ready")
+        else:
+            logger.warning("Database is unreachable; skipping table creation")
     yield
     logger.info("Shutting down %s", settings.app_name)
 

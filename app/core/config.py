@@ -56,6 +56,7 @@ class Settings:
     trusted_hosts: list[str] | None = None
     database_url: str = "postgresql://demouser:demouser@localhost/testdb"
     sqlalchemy_echo: bool = False
+    auto_create_tables: bool = False
     jwt_secret_key: str = "change-me-in-production"
     jwt_algorithm: str = "HS256"
     jwt_access_token_expire_minutes: int = 15
