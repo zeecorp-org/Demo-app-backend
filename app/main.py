@@ -19,7 +19,7 @@ async def lifespan(_: FastAPI):
     logger.info("Starting %s in %s mode", settings.app_name, settings.environment)
     if settings.auto_create_tables:
         if ping_database():
-            create_tables()
+            # create_tables()
             logger.info("Database tables are ready")
         else:
             logger.warning("Database is unreachable; skipping table creation")
