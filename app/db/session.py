@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
 from app.core.config import settings
+from app.models import Base
 
 engine = create_engine(
     settings.database_url,
@@ -25,3 +26,6 @@ def ping_database() -> bool:
     except Exception:
         return False
 
+
+def create_tables() -> None:
+    Base.metadata.create_all(bind=engine)

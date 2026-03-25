@@ -56,6 +56,7 @@ class Settings:
     trusted_hosts: list[str] | None = None
     database_url: str = "postgresql://demouser:demouser@localhost/testdb"
     sqlalchemy_echo: bool = False
+    auto_create_tables: bool = True
     jwt_secret_key: str = "change-me-in-production"
     jwt_algorithm: str = "HS256"
     jwt_access_token_expire_minutes: int = 15
@@ -76,6 +77,10 @@ class Settings:
             sqlalchemy_echo=_parse_bool(
                 os.getenv("SQLALCHEMY_ECHO"),
                 cls.sqlalchemy_echo,
+            ),
+            auto_create_tables=_parse_bool(
+                os.getenv("AUTO_CREATE_TABLES"),
+                cls.auto_create_tables,
             ),
             jwt_secret_key=os.getenv("JWT_SECRET_KEY", cls.jwt_secret_key),
             jwt_algorithm=os.getenv("JWT_ALGORITHM", cls.jwt_algorithm),
