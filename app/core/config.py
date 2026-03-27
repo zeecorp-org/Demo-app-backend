@@ -59,8 +59,8 @@ class Settings:
     auto_create_tables: bool = False
     jwt_secret_key: str = "change-me-in-production"
     jwt_algorithm: str = "HS256"
-    jwt_access_token_expire_minutes: int = 15
-    jwt_refresh_token_expire_minutes: int = 60 * 24 * 7
+    jwt_access_token_expire_minutes: int = 60
+    jwt_refresh_token_expire_minutes: int = 60 * 24 * 30
 
     @classmethod
     def from_env(cls) -> "Settings":

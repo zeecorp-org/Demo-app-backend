@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from sqlalchemy.orm import Session
 
-from app.api.deps import get_db
+from app.api.deps import get_current_user_id, get_db
 from app.crud.friendship import (
     get_active_friends,
     get_pending_received,
@@ -22,12 +22,7 @@ from app.schemas.friendship import (
 
 router = APIRouter()
 DbSession = Annotated[Session, Depends(get_db)]
-
-# ---------------------------------------------------------------------------
-# Temporary: current_user_id is passed as a query param until auth
-# middleware is wired in.
-# ---------------------------------------------------------------------------
-CurrentUserId = Annotated[int, Query(alias="current_user_id")]
+CurrentUserId = Annotated[int, Depends(get_current_user_id)]
 
 
 @router.post(
