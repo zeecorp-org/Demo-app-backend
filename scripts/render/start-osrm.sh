@@ -10,6 +10,21 @@ EXTRACT_URL="${OSRM_EXTRACT_URL:-}"
 EXTRACT_PATH="${DATA_DIR}/${EXTRACT_FILE}"
 GRAPH_PATH="${DATA_DIR}/${GRAPH_BASENAME}.osrm"
 
+download_extract() {
+  if command -v curl >/dev/null 2>&1; then
+    curl -L --fail --retry 3 "$1" -o "$2"
+    return
+  fi
+
+  if command -v wget >/dev/null 2>&1; then
+    wget -O "$2" "$1"
+    return
+  fi
+
+  echo "Neither curl nor wget is available to download ${EXTRACT_FILE}."
+  exit 1
+}
+
 mkdir -p "$DATA_DIR"
 
 if [ ! -f "$EXTRACT_PATH" ]; then
@@ -19,7 +34,7 @@ if [ ! -f "$EXTRACT_PATH" ]; then
   fi
 
   echo "Downloading OSM extract from ${EXTRACT_URL}"
-  curl -L --fail --retry 3 "$EXTRACT_URL" -o "$EXTRACT_PATH"
+  download_extract "$EXTRACT_URL" "$EXTRACT_PATH"
 fi
 
 if [ ! -f "$GRAPH_PATH" ]; then
