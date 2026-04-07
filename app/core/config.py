@@ -79,7 +79,7 @@ class Settings:
     jwt_algorithm: str = "HS256"
     jwt_access_token_expire_minutes: int = 15
     jwt_refresh_token_expire_minutes: int = 60 * 24 * 7
-    osrm_base_url: str = "http://osrm:5000"
+    osrm_base_url: str = "https://router.project-osrm.org"
     osrm_request_timeout_seconds: float = 5.0
     osrm_max_retries: int = 1
     routing_max_snap_distance_m: float = 5000.0
