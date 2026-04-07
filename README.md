@@ -97,6 +97,42 @@ If they do not appear in pgAdmin, first make sure you are connected to the same 
 - `/api/v1/routing/route`
 - `/docs`
 
+## Deploy on Render
+
+This repository includes a Render Blueprint at [render.yaml](render.yaml) that provisions:
+
+- one FastAPI web service (`demo-app-api`)
+- one private OSRM service (`routing-osrm`)
+- one managed Postgres database (`demo-app-db`)
+
+### What was added for deployment
+
+- API startup script with migration retries: [scripts/render/start-api.sh](scripts/render/start-api.sh)
+- OSRM startup script with extract download and graph build: [scripts/render/start-osrm.sh](scripts/render/start-osrm.sh)
+- OSRM Docker image definition: [Dockerfile.osrm](Dockerfile.osrm)
+- Build context cleanup: [.dockerignore](.dockerignore)
+
+### Deploy steps
+
+1. Push this branch to your Git provider.
+2. In Render, create a Blueprint and point it to this repository.
+3. Render detects [render.yaml](render.yaml) and shows the three resources.
+4. Review and apply.
+5. Wait for OSRM first boot to finish. The first deploy can take time while it downloads and preprocesses Karnataka map data.
+
+### Important notes
+
+- `OSRM_BASE_URL` is wired to `http://routing-osrm:5000` for internal Render networking.
+- API container runs `alembic upgrade head` before starting Uvicorn.
+- OSRM data is stored on a persistent disk mounted at `/data`.
+- If you want a different region, update `OSRM_EXTRACT_URL` in [render.yaml](render.yaml).
+
+### Post-deploy checks
+
+- API live check: `GET /api/v1/health/live`
+- OSRM integration check: `GET /api/v1/routing/health`
+- Route call: `POST /api/v1/routing/route`
+
 ## Routing API contract
 
 ### POST /api/v1/routing/route
