@@ -6,6 +6,7 @@ EXTRACT_FILE="${OSRM_EXTRACT_FILE:-region.osm.pbf}"
 GRAPH_BASENAME="${OSRM_GRAPH_BASENAME:-region}"
 LUA_PROFILE="${OSRM_LUA_PROFILE:-car}"
 EXTRACT_URL="${OSRM_EXTRACT_URL:-}"
+OSRM_THREADS="${OSRM_THREADS:-2}"
 
 EXTRACT_PATH="${DATA_DIR}/${EXTRACT_FILE}"
 GRAPH_PATH="${DATA_DIR}/${GRAPH_BASENAME}.osrm"
@@ -38,8 +39,8 @@ if [ ! -f "$EXTRACT_PATH" ]; then
 fi
 
 if [ ! -f "$GRAPH_PATH" ]; then
-  echo "Preparing OSRM graph files for ${EXTRACT_FILE}"
-  osrm-extract -p "/opt/${LUA_PROFILE}.lua" "$EXTRACT_PATH"
+  echo "Preparing OSRM graph files for ${EXTRACT_FILE} with ${OSRM_THREADS} thread(s)"
+  osrm-extract --threads "$OSRM_THREADS" -p "/opt/${LUA_PROFILE}.lua" "$EXTRACT_PATH"
   osrm-partition "$GRAPH_PATH"
   osrm-customize "$GRAPH_PATH"
 fi

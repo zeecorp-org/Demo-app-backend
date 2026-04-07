@@ -42,3 +42,5 @@ services:
         value: region
       - key: OSRM_LUA_PROFILE
         value: car
+      - key: OSRM_THREADS
+        value: 2

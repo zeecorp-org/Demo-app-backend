@@ -49,7 +49,7 @@ newgrp docker
 cp .env.example .env
 ```
 
-For this mode, keep:
+For this mode, set:
 
 ```env
 OSRM_BASE_URL=http://127.0.0.1:5000
@@ -122,7 +122,7 @@ This repository includes a Render Blueprint at [render.yaml](render.yaml) that p
 
 ### Important notes
 
-- `OSRM_BASE_URL` is wired to `http://routing-osrm:5000` for internal Render networking.
+- `OSRM_BASE_URL` should be set to `http://routing-osrm:5000` for internal Render networking.
 - API container runs `alembic upgrade head` before starting Uvicorn.
 - OSRM data is stored on a persistent disk mounted at `/data`.
 - If you want a different region, update `OSRM_EXTRACT_URL` in [render.yaml](render.yaml).
@@ -198,7 +198,8 @@ Status codes:
 
 ## OSRM notes
 
-- `OSRM_BASE_URL` defaults to `http://osrm:5000`.
+- `OSRM_BASE_URL` defaults to `https://router.project-osrm.org`.
+- Override `OSRM_BASE_URL` for local/private OSRM deployments (for example `http://127.0.0.1:5000` or `http://routing-osrm:5000`).
 - OSRM uses MLD preprocessing (`extract -> partition -> customize`) by default.
 - For low latency, use a regional extract instead of a planet extract.
 - The loaded `.osm.pbf` must match your app geography. If you route in Karnataka with a non-India extract, OSRM can return far-away snapped points.
