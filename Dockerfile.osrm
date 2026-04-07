@@ -1,0 +1,10 @@
+FROM ghcr.io/project-osrm/osrm-backend:latest
+
+WORKDIR /app
+
+COPY scripts/render/start-osrm.sh /start-osrm.sh
+RUN chmod +x /start-osrm.sh
+
+EXPOSE 5000
+
+CMD ["/start-osrm.sh"]
