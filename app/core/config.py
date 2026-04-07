@@ -54,7 +54,7 @@ class Settings:
     api_v1_prefix: str = "/api/v1"
     allowed_origins: list[str] | None = None
     trusted_hosts: list[str] | None = None
-    database_url: str = "postgresql://demouser:demouser@localhost/testdb"
+    database_url: str = "postgresql://demouser:2g298M2fu299CWoXhNtLfhkewmliEGIv@dpg-d7aisvshg0os73b4a400-a/testdb_vsko"
     sqlalchemy_echo: bool = False
     auto_create_tables: bool = False
     jwt_secret_key: str = "change-me-in-production"
