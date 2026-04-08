@@ -22,8 +22,7 @@ venv.bak/
 # ------------------------------
 # Environment variables
 # ------------------------------
-.env
-*.env
+
 
 # ------------------------------
 # IDE / Editor
@@ -94,6 +93,8 @@ dist/
 # Docker
 # ------------------------------
 docker-compose.override.yml
+osrm-data/*.osm.pbf
+osrm-data/*.osrm*
 
 # ------------------------------
 # Jupyter (if used)

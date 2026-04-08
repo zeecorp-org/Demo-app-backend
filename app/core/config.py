@@ -27,6 +27,24 @@ def _parse_bool(value: str | None, default: bool) -> bool:
     return value.strip().lower() in {"1", "true", "yes", "on"}
 
 
+def _parse_int(value: str | None, default: int) -> int:
+    if value is None:
+        return default
+    try:
+        return int(value)
+    except ValueError:
+        return default
+
+
+def _parse_float(value: str | None, default: float) -> float:
+    if value is None:
+        return default
+    try:
+        return float(value)
+    except ValueError:
+        return default
+
+
 def _parse_list(value: str | None, default: list[str]) -> list[str]:
     if value is None or not value.strip():
         return default
@@ -54,13 +72,17 @@ class Settings:
     api_v1_prefix: str = "/api/v1"
     allowed_origins: list[str] | None = None
     trusted_hosts: list[str] | None = None
-    database_url: str = "postgresql://demouser:demouser@localhost/testdb"
+    database_url: str = "postgresql://demouser:2g298M2fu299CWoXhNtLfhkewmliEGIv@dpg-d7aisvshg0os73b4a400-a/testdb_vsko"
     sqlalchemy_echo: bool = False
     auto_create_tables: bool = False
     jwt_secret_key: str = "change-me-in-production"
     jwt_algorithm: str = "HS256"
     jwt_access_token_expire_minutes: int = 15
     jwt_refresh_token_expire_minutes: int = 60 * 24 * 7
+    osrm_base_url: str = "https://router.project-osrm.org"
+    osrm_request_timeout_seconds: float = 5.0
+    osrm_max_retries: int = 1
+    routing_max_snap_distance_m: float = 5000.0
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -74,6 +96,10 @@ class Settings:
             allowed_origins=_parse_list(os.getenv("ALLOWED_ORIGINS"), ["*"]),
             trusted_hosts=_parse_list(os.getenv("TRUSTED_HOSTS"), ["*"]),
             database_url=os.getenv("DATABASE_URL", cls.database_url),
+            auto_create_tables=_parse_bool(
+                os.getenv("AUTO_CREATE_TABLES"),
+                cls.auto_create_tables,
+            ),
             sqlalchemy_echo=_parse_bool(
                 os.getenv("SQLALCHEMY_ECHO"),
                 cls.sqlalchemy_echo,
@@ -91,6 +117,19 @@ class Settings:
                     "JWT_REFRESH_TOKEN_EXPIRE_MINUTES",
                     str(cls.jwt_refresh_token_expire_minutes),
                 )
+            ),
+            osrm_base_url=os.getenv("OSRM_BASE_URL", cls.osrm_base_url),
+            osrm_request_timeout_seconds=_parse_float(
+                os.getenv("OSRM_REQUEST_TIMEOUT_SECONDS"),
+                cls.osrm_request_timeout_seconds,
+            ),
+            osrm_max_retries=_parse_int(
+                os.getenv("OSRM_MAX_RETRIES"),
+                cls.osrm_max_retries,
+            ),
+            routing_max_snap_distance_m=_parse_float(
+                os.getenv("ROUTING_MAX_SNAP_DISTANCE_M"),
+                cls.routing_max_snap_distance_m,
             ),
         )
 
